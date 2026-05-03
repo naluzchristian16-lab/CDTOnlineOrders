@@ -21,7 +21,7 @@ export default function CoffeeOrderingSystem() {
       counter += 1;
     }
   
-    localStorage.setItem("order_counter", counter);
+    localStorage.setItem("order_counter", String(counter));
   
     const counterStr = String(counter).padStart(4, "0");
   
@@ -261,7 +261,11 @@ type CartItem = {
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
 
-  const addToCart = (item, size = null, addExtra = false) => {
+  const addToCart = (
+  item: MenuItem,
+  size: Size | null = null,
+  addExtra: boolean = false
+) => {
     const baseName = size ? `${item.name} (${size.label})` : item.name;
     const label = addExtra ? `${baseName} + Extra Shot` : baseName;
 
@@ -282,13 +286,13 @@ type CartItem = {
     setExtraShot(false);
   };
 
-  const increase = (label) => {
+  const increase = (label: string) => {
     setCart((prev) =>
       prev.map((c) => (c.label === label ? { ...c, qty: c.qty + 1 } : c))
     );
   };
 
-  const decrease = (label) => {
+  const decrease = (label: string) => {
     setCart((prev) =>
       prev
         .map((c) => (c.label === label ? { ...c, qty: c.qty - 1 } : c))
@@ -296,13 +300,13 @@ type CartItem = {
     );
   };
 
-  const remove = (label) => {
+  const remove = (label: string) => {
     setCart((prev) => prev.filter((c) => c.label !== label));
   };
 
   const total = cart.reduce((sum, c) => sum + c.price * c.qty, 0);
 
-  const sendToTelegram = async (text) => {
+  const sendToTelegram = async (text: string) => {
     try {
       await fetch(
         `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,
