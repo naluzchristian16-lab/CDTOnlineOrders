@@ -28,12 +28,28 @@ export default function CoffeeOrderingSystem() {
     return `Order#${datePart}${counterStr}`;
   };
   const EXTRA_SHOT_PRICE = 10;
+type Size = {
+  label: string;
+  price: number;
+};
 
+type MenuItem = {
+  name: string;
+  category: string;
+  price?: number;
+  sizes?: Size[];
+};
+
+type CartItem = {
+  label: string;
+  price: number;
+  qty: number;
+};
   // ⚠️ SET YOUR TELEGRAM CREDENTIALS HERE
   const BOT_TOKEN = "8799637148:AAFuHNFjYp8w9l9nPrVEhb7n2ZQ60LE-hao";
   const CHAT_ID = "-5109746728";
 
-  const menu = [
+  const menu: MenuItem[] = [
     // ===== HOT (no sizes) =====
     { name: "Hot Americano", price: 69, category: "Hot" },
     { name: "Hot Spanish Latte", price: 79, category: "Hot" },
@@ -238,10 +254,10 @@ export default function CoffeeOrderingSystem() {
   ];
   const categories = ["Hot", "Iced-Coffee", "Oatside Series", "Non-Coffee"];
 
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [activeItem, setActiveItem] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [activeItem, setActiveItem] = useState<MenuItem | null>(null);
   const [extraShot, setExtraShot] = useState(false);
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState<CartItem[]>([]);
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
 
