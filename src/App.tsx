@@ -269,7 +269,7 @@ type CartItem = {
     const baseName = size ? `${item.name} (${size.label})` : item.name;
     const label = addExtra ? `${baseName} + Extra Shot` : baseName;
 
-    const basePrice = size ? size.price : item.price;
+    const basePrice = size ? size.price : (item.price ?? 0);
     const price = addExtra ? basePrice + EXTRA_SHOT_PRICE : basePrice;
 
     setCart((prev) => {
